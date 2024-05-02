@@ -9,6 +9,9 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.js'></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.css' type='text/css' />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link href="https://api.mapbox.com/mapbox-assembly/v1.3.0/assembly.min.css" rel="stylesheet">
+<script id="search-js" defer="" src="https://api.mapbox.com/search-js/v1.0.0-beta.20/web.js"></script>
+
 
 <style>
 body { margin: 0; padding: 0; }
@@ -88,6 +91,19 @@ body { margin: 0; padding: 0; }
                 alert('Click the map to draw a polygon.');
         }
     }
+
+    const searchJS = document.getElementById('search-js');
+    searchJS.onload = function () {
+        const searchBox = new MapboxSearchBox();
+        searchBox.accessToken = mapboxgl.accessToken;
+        searchBox.options = {
+            types: 'address,poi',
+            proximity: [8.247253, 49.992863]
+        };
+        searchBox.marker = true;
+        searchBox.mapboxgl = mapboxgl;
+        map.addControl(searchBox);
+    };
 
 
     map.on('load', () => {
